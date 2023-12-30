@@ -212,6 +212,8 @@ def short_type_lookup(type_name):
         return "Meteosis MTS01"
     elif type_name == "WXR301":
         return "Weathex WxR-301D"
+        elif type_name == "PS15":
+        return "DFM"
     else:
         return "Unknown"
 
@@ -256,6 +258,8 @@ def short_short_type_lookup(type_name):
         return "MTS01"
     elif type_name == "WXR301":
         return "WXR301"
+    elif type_name == "PS15":
+        return "DFM"
     else:
         return "Unknown"
 
@@ -269,7 +273,7 @@ def generate_aprs_id(sonde_data):
         if ("RS92" in sonde_data["type"]) or ("RS41" in sonde_data["type"]):
             # We can use the Vaisala sonde ID directly.
             _object_name = sonde_data["id"].strip()
-        elif "DFM" in sonde_data["type"]:
+        elif "DFM" in sonde_data["type"] or ("DFM" in sonde_data["id"]):
             # As per agreement with other radiosonde decoding software developers, we will now
             # use the DFM serial number verbatim in the APRS ID, prefixed with 'D'.
             # For recent DFM sondes, this will result in a object ID of: Dyynnnnnn
