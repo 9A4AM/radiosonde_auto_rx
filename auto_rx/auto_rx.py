@@ -17,6 +17,7 @@
 # 3 - exception occurred, can rerun after resetting SDR
 # 4 - some of the threads failed to join, SDR reset and restart required
 #     this is mostly caused by hung external utilities
+#
 
 import argparse
 import datetime
