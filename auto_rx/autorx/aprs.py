@@ -744,10 +744,16 @@ class APRSUploader(object):
 
         # Add it to the queue if we are running.
         if self.input_processing_running:
+            # Add for low limit send telemetry to APRS-IS -Radiosondy by 9A4AM
+            if float(telemetry['vel_v']) < -1 and float(telemetry['alt']) < 1500:
+                self.inhibit = True
+            else:
+                self.inhibit = False
+            # Add for low limit send telemetry to APRS-IS -Radiosondy by 9A4AM
             self.input_queue.put(telemetry)
         else:
             self.log_error("Processing not running, discarding.")
-
+            
     def close(self):
         """ Shutdown uploader and processing threads. """
         self.log_debug("Waiting for threads to close...")
