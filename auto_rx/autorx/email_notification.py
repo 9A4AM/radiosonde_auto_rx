@@ -197,6 +197,7 @@ class EmailNotification(object):
                     msg += "\n"
                     msg += "https://sondehub.org/%s\n" % strip_sonde_serial(_id)
                     msg += "https://sondehub.org/card/%s\n" % strip_sonde_serial(_id)
+                    msg += "https://radiosondy.info/sonde.php?sondenumber=%s\n" % strip_sonde_serial(_id)
 
                     # Construct subject
                     _subject = self.mail_subject
@@ -292,6 +293,7 @@ class EmailNotification(object):
                                 "https://sondehub.org/card/%s\n"
                                 % strip_sonde_serial(_id)
                             )
+                            msg += "https://radiosondy.info/sonde.php?sondenumber=%s\n" % strip_sonde_serial(_id)
 
                             # Construct subject
                             _subject = self.mail_nearby_landing_subject
