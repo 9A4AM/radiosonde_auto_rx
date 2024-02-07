@@ -279,6 +279,7 @@ class EmailNotification(object):
                                 telemetry["lon"],
                             )
                             msg += "Altitude:  %d m\n" % round(telemetry["alt"])
+                            msg += "Climb:     %d m/s\n" % telemetry["vel_v"]
 
                             msg += "Range:     %.1f km (Threshold: %.1fkm)\n" % (
                                 _relative_position["straight_distance"] / 1000.0,
@@ -289,12 +290,13 @@ class EmailNotification(object):
                             )
 
                             msg += "\n"
+                            msg += "https://radiosondy.info/sonde.php?sondenumber=%s\n" % strip_sonde_serial(_id)
                             msg += "https://sondehub.org/%s\n" % strip_sonde_serial(_id)
                             msg += (
                                 "https://sondehub.org/card/%s\n"
                                 % strip_sonde_serial(_id)
                             )
-                            msg += "https://radiosondy.info/sonde.php?sondenumber=%s\n" % strip_sonde_serial(_id)
+                            
 
                             # Construct subject
                             _subject = self.mail_nearby_landing_subject
