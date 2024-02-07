@@ -170,7 +170,7 @@ class EmailNotification(object):
 
                 try:
                     # This is a new sonde. Send the email.
-                    msg = "Sonde launch detected:\n"
+                    msg = "Sonde flight detected in area:\n"
                     msg += "\n"
 
                     msg += "Serial:    %s\n" % _id
@@ -181,6 +181,7 @@ class EmailNotification(object):
                         telemetry["lon"],
                     )
                     msg += "Altitude:  %d m\n" % round(telemetry["alt"])
+                    msg += "Climb:     %d m/s\n" % telemetry["vel_v"]
 
                     if self.station_position != None:
                         _relative_position = position_info(
