@@ -745,7 +745,7 @@ class APRSUploader(object):
         # Add it to the queue if we are running.
         if self.input_processing_running:
             # Add for low limit send telemetry to APRS-IS -Radiosondy by 9A4AM
-            if float(telemetry['vel_v']) < -1 and float(telemetry['alt']) < 1500:
+            if float(telemetry['vel_v']) < -2 and float(telemetry['alt']) < 1500:
                 self.inhibit = True
             else:
                 self.inhibit = False
