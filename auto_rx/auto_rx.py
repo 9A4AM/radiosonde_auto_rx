@@ -599,6 +599,18 @@ def telemetry_filter(telemetry):
                 )
             )
             return "TempBlock"
+            
+            # If landed, go to scan --- 9A4AM
+        if (telemetry["alt"] < 500) and (telemetry["vel_v"] > -1):
+            logging.warning(
+                "Sonde %s landed and live. Blocking for %d minutes."
+                % (
+                    telemetry["id"],
+                    config["temporary_block_time"],
+                )
+            )
+            return "TempBlock"
+    
 
     # DateTime Check
     _delta_time = (
