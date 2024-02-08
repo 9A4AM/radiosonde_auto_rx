@@ -601,7 +601,7 @@ def telemetry_filter(telemetry):
             return "TempBlock"
             
             # If landed, go to scan --- 9A4AM
-        if (telemetry["alt"] < 500) and (telemetry["vel_v"] > 0):
+        if (telemetry["alt"] < 500) and (telemetry["vel_v"] >= 0):
             logging.warning(
                 "Sonde %s landed and live. Blocking for %d minutes."
                 % (
