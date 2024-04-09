@@ -76,7 +76,7 @@ def check_rs_utils(config):
     return True
 
 
-AUTORX_MAIN_VERSION_URL = "https://raw.githubusercontent.com/projecthorus/radiosonde_auto_rx/master/auto_rx/autorx/__init__.py"
+AUTORX_MAIN_VERSION_URL = "https://raw.githubusercontent.com/9A4AM/radiosonde_auto_rx/master/auto_rx/autorx/__init__.py"
 AUTORX_TESTING_VERSION_URL = "https://raw.githubusercontent.com/projecthorus/radiosonde_auto_rx/testing/auto_rx/autorx/__init__.py"
 
 
