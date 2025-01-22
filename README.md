@@ -41,7 +41,7 @@ Please consider joining the Google Group to receive updates on new software feat
 https://groups.google.com/forum/#!forum/radiosonde_auto_rx
 
 ### Modified by 9A4AM
- Added PS-15 radiosonde and limit altitude for send telemetry to APRS-IS and SondeHub server, add Radiosondy link in to E-mail, skip decode after landing, add 9a4am.ddns.net as valid APRS server, Add geoApp link for Android
+ Added PS-15 radiosonde and limit altitude for send telemetry to APRS-IS and SondeHub server, add Radiosondy link in to E-mail, skip decode after landing, add 9a4am.ddns.net and meteosonde.duckdns.org as valid APRS server, Add geoApp link for Android
 
 ## Presentations
 * Linux.conf.au 2019 - https://www.youtube.com/watch?v=YBy-bXEWZeM
