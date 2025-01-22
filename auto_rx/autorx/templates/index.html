@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,6 +40,10 @@
         var sonde_positions = {};
 
         var sonde_currently_following = "none";
+
+        function encodeGeo(value) {
+            return encodeURIComponent(value).replace(/%2C/g, ",");
+        }
 
         // Function to change CSS options when changing dark mode.
         function changeTheme(dark) {
@@ -470,22 +475,50 @@
                     {title:"Type", field:"type", headerSort:true},
                     {title:'Freq (MHz)', field:"freq", headerSort:true},
                     {title:"ID", field:"id", width:125, headerSort:true, formatter:function(cell, formatterParams, onRendered){
-                        _cell_data = cell.getData();
-                        _id = _cell_data.id.replace(/^(DFM|M10|M20|IMET|IMET5|IMET54|MRZ|IMS100|RS11G|MTS01|WXR)-/,"");
-                        _sondehub_id = _cell_data.id.replace(/^(DFM|M10|M20|IMET|IMET5|IMET54|MRZ|IMS100|RS11G|MTS01|WXR)-/,"");
+                        let _cell_data = cell.getData();
+                        let _id = _cell_data.id.replace(/^(DFM|M10|M20|IMET|IMET5|IMET54|MRZ|IMS100|RS11G|MTS01|WXR)-/,"");
+                        let _sondehub_id = _cell_data.id.replace(/^(DFM|M10|M20|IMET|IMET5|IMET54|MRZ|IMS100|RS11G|MTS01|WXR)-/,"");
+
+                        let sondehubLink = "";
+                        let radiosondyLink = "";
+                        let geoLink = "";
+                           
 
                         // Add Sondehub Link
-                        _id += "&nbsp;<a href='http://sondehub.org/" + _sondehub_id + "' title='View on Sondehub' target='_blank'>" + "<img src='{{ url_for('static', filename='img/sondehub.png')}}'/>" + "</a>";
+                        sondehubLink= "<a href='http://sondehub.org/" + _sondehub_id + "' title='View on Sondehub' target='_blank'>" + "<img src='{{ url_for('static', filename='img/sondehub.png')}}'/>" + "</a>";
+
+                       
 
                         // Add Radiosondy Link
                         if(_cell_data.aprsid != null){
                             _aprs_id = _cell_data.aprsid.trim();
-                            _id += "<a href='https://radiosondy.info/sonde_archive.php?sondenumber=" + _aprs_id + "' title='View on Radiosondy.info' target='_blank'>" + "<img src='{{ url_for('static', filename='img/radiosondy.png')}}'/>" + "</a>";
+                            radiosondyLink= "<a href='https://radiosondy.info/sonde_archive.php?sondenumber=" + _aprs_id + "' title='View on Radiosondy.info' target='_blank'>" + "<img src='{{ url_for('static', filename='img/radiosondy.png')}}'/>" + "</a>";
 
                         } else {
                             _aprs_id = null;
                         }
 
+                        // Add GeoApp Link with geo://lat,lon(_sondehub_id)
+
+                        if (_cell_data.lat != null && _cell_data.lon != null) {
+                            let _geolat = _cell_data.lat.replace(/<[^>]*>/g, '').trim(); // Uklanjamo HTML tagove
+                            let _geolon = _cell_data.lon.replace(/<[^>]*>/g, '').trim(); // Uklanjamo HTML tagove     
+                            // console.log("geolat:", _geolat);
+                            // console.log("geolon:", _geolon);
+                            _aprs_ide = _cell_data.aprsid ? `(${_cell_data.aprsid.trim()})` : "";
+                            let _geoPos = _geolat + "," + _geolon + _aprs_ide;
+                            var _link = "geo:0,0?q=" + encodeGeo(_geoPos);
+                            geoLink = "<a href='" + _link + "' title='View on GeoApp' target='_blank'>" + "<img src='{{ url_for('static', filename='img/marker.png')}}'/>" + "</a>";
+                            }
+                        
+                                               
+
+                        _id += "&nbsp;" + sondehubLink + radiosondyLink + geoLink;
+
+
+                        // console.log("Aprs_ide:", _aprs_ide);
+                        // console.log("celllat:", cell_data.lat);
+                        // console.log("celllon:", cell_data.lon);
                         return _id;
                     }},
                     {title:"Time", field:"datetime", width:180, headerSort:true, formatter:function(cell, formatterParams, onRendered){
@@ -494,7 +527,7 @@
                             var temp_converted = temp_time.toLocaleString(window.navigator.language,{hourCycle:'h23', year:"numeric", month:"2-digit", day:'2-digit', hour:'2-digit',minute:'2-digit', second:'2-digit'});
                             if (temp_converted == "Invalid Date") {                    
                                 return;
-                            } else {
+                               } else {
                                 return temp_converted;
                             }                            
                         } else {
